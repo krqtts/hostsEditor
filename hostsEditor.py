@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import json
-import os
+import json, os
 
 import wx
 from wx.lib.pubsub import setuparg1    
@@ -10,11 +9,7 @@ from wx.lib.pubsub import pub as Publisher
 class mdl:
   def __init__(self, *args, **kwds):
     self.filePath = "c:\Windows\System32\Drivers\etc\hosts"
-    self.fileContent = ""
-  def loadData(self):
-    txt = open(self.filePath)
-    self.fileContent = txt.read()
-    print self.fileContent
+    self.fileContent = open(self.filePath).read()
 
 class vw(wx.Frame):
   def __init__(self, parent, id, title):
@@ -36,16 +31,12 @@ class vw(wx.Frame):
     vbox.Add(self.textEdit, 1, wx.EXPAND, 0)
     pnl.SetSizer(vbox)
 
-
 class ctrlr:
   def __init__(self, app):
     self.model = mdl()
     self.view  = vw(None, -1, 'Hosts Editor')
-    self.initModel()
     self.initView()
     self.view.Show()
-  def initModel(self):
-    self.model.loadData()
   def initView(self):
     self.view.textEdit.SetValue(self.model.fileContent)
     
